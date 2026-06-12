@@ -1,7 +1,16 @@
 type ScopeProps = {
-  inScope?: string[];
-  outScope?: string[];
+  /** Items as a single `;`-separated string, e.g. "Item one; Item two". */
+  inScope?: string;
+  outScope?: string;
 };
+
+/** Split a `;`-separated list into trimmed, non-empty items. */
+function toItems(value?: string): string[] {
+  return (value ?? "")
+    .split(";")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
 
 function ScopeCard({
   title,
@@ -59,17 +68,18 @@ function ScopeCard({
  * .mdx with array props:
  *
  *   <Scope
- *     inScope={["Item one", "Item two"]}
- *     outScope={["Item one", "Item two"]}
+ *     inScope="Item one; Item two; Item three"
+ *     outScope="Item one; Item two"
  *   />
  *
- * `not-prose` keeps the typography plugin from restyling the panels.
+ * Items are separated by semicolons. `not-prose` keeps the typography plugin
+ * from restyling the panels.
  */
-export default function Scope({ inScope = [], outScope = [] }: ScopeProps) {
+export default function Scope({ inScope, outScope }: ScopeProps) {
   return (
     <div className="not-prose my-8 grid grid-cols-1 gap-4 md:my-10 md:grid-cols-2 md:gap-6">
-      <ScopeCard title="In Scope" items={inScope} variant="in" />
-      <ScopeCard title="Out of Scope" items={outScope} variant="out" />
+      <ScopeCard title="In Scope" items={toItems(inScope)} variant="in" />
+      <ScopeCard title="Out of Scope" items={toItems(outScope)} variant="out" />
     </div>
   );
 }

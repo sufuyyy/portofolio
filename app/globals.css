@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink text-soft antialiased;
+  font-feature-settings: "kern", "liga", "calt";
+}
+
+::selection {
+  @apply bg-accent text-paper;
+}
+
+/* Editorial section wrapper */
+.container-x {
+  @apply mx-auto w-full max-w-content px-6 md:px-10;
+}
+
+/* Film-grain overlay (applied to a fixed element in the layout) */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Outlined (stroked) text — pairs with a text-* color utility for the stroke */
+.text-stroke {
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: currentColor;
+  -webkit-text-fill-color: transparent;
+}
+@media (min-width: 768px) {
+  .text-stroke {
+    -webkit-text-stroke-width: 2px;
+  }
+}
+
+/* Animated underline used on inline links */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse,
+  .animate-spin-slow,
+  .animate-rise,
+  .animate-page-in,
+  .animate-pulse-dot,
+  .animate-bounce-y {
+    animation: none !important;
+  }
+}

@@ -1,3 +1,5 @@
+import Reveal from "./Reveal";
+
 type ProjectImageProps = {
   src: string;
   alt?: string;
@@ -12,16 +14,14 @@ type ProjectImageProps = {
  */
 export default function ProjectImage({ src, alt = "", caption }: ProjectImageProps) {
   return (
-    <figure className="my-8 md:my-10">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt={alt}
-        className="w-full"
-      />
-      {caption ? (
-        <figcaption className="mt-3 text-sm text-muted">{caption}</figcaption>
-      ) : null}
-    </figure>
+    <Reveal>
+      <figure className="my-8 md:my-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt} className="w-full" />
+        {caption ? (
+          <figcaption className="mt-3 text-sm text-muted">{caption}</figcaption>
+        ) : null}
+      </figure>
+    </Reveal>
   );
 }

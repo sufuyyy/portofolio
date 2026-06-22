@@ -37,7 +37,7 @@ export default function Metrics({ items }: { items?: string }) {
       {metrics.map((m, i) => (
         <div
           key={i}
-          className="border border-line bg-transparent p-6 md:p-8"
+          className="border border-line/20 bg-transparent p-6 md:p-8"
         >
           <span className="inline-flex items-center bg-accent/15 px-3 py-1.5 font-display text-lg font-bold tracking-tight text-accent">
             {m.value}

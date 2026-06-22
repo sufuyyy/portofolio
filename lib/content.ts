@@ -25,6 +25,13 @@ export type AboutFrontmatter = {
   linkedin: string;
   dribbble: string;
   experience: Experience[];
+  /** Optional small image that floats (absolute) over the About hero. */
+  heroAccent?: string;
+};
+
+export type WorkLink = {
+  label: string;
+  url: string;
 };
 
 export type WorkFrontmatter = {
@@ -36,6 +43,7 @@ export type WorkFrontmatter = {
   summary: string;
   cover: string;
   order?: number;
+  links?: WorkLink[];
 };
 
 export type Work = {

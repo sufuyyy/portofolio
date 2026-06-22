@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import { getAbout } from "@/lib/content";
+import { mdxComponents } from "@/components/mdx-components";
+import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "About",
 };
 
 export default async function AboutPage() {
-  const { frontmatter } = await getAbout();
+  const { frontmatter, content } = await getAbout();
   const exp = frontmatter.experience;
   const expCols =
     exp.length > 3
@@ -20,16 +24,26 @@ export default async function AboutPage() {
   return (
     <article>
       {/* ── HERO — poster layout, anchored to the bottom of the viewport ── */}
-      <section className="flex min-h-[calc(100svh-4rem)] items-end border-b border-line">
+      <section className="relative flex min-h-[calc(100svh-4rem)] items-end border-b border-line">
+        {frontmatter.heroAccent ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={frontmatter.heroAccent}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute right-6 top-20 z-10 w-28 md:right-10 md:top-24 md:w-40 lg:w-52"
+          />
+        ) : null}
         <div className="container-x w-full py-16 md:py-24">
-          <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent">
-            About — {frontmatter.role}
-          </p>
-
-          <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_24rem] lg:gap-0">
-            <h1 className="font-display text-6xl uppercase leading-[0.92] text-paper sm:text-7xl lg:pr-10 lg:text-[92px]">
-              {frontmatter.name}
-            </h1>
+          <div className="grid gap-10 lg:grid-cols-[1fr_24rem] lg:gap-0">
+            <div className="flex flex-col justify-end lg:pr-10">
+              <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent">
+                About — {frontmatter.role}
+              </p>
+              <h1 className="mt-6 font-display text-6xl uppercase leading-[0.92] text-paper sm:text-7xl lg:text-[92px]">
+                {frontmatter.name}
+              </h1>
+            </div>
 
             <div className="flex flex-col justify-end border-line lg:border-l lg:pl-10">
               <p className="text-[15px] leading-relaxed text-soft">
@@ -64,6 +78,21 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {/* ── CONTENT — free text from the About MDX body (optional) ── */}
+      {content.trim() ? (
+        <section className="border-b border-line">
+          <Reveal className="container-x max-w-3xl py-20 md:py-28">
+            <div className="prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight">
+              <MDXRemote
+                source={content}
+                components={mdxComponents}
+                options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+              />
+            </div>
+          </Reveal>
+        </section>
+      ) : null}
+
       {/* ── EXPERIENCE — card grid (same treatment as Selected Work) ── */}
       <section className="container-x pb-24 pt-20 md:pb-28">
         <div className="mb-8 flex items-end justify-between border-b border-line pb-4">
@@ -75,6 +104,7 @@ export default async function AboutPage() {
           </span>
         </div>
 
+        <Reveal>
         <dl className={`grid grid-cols-1 gap-px bg-line ${expCols}`}>
           {exp.map((job, i) => (
             <div
@@ -98,6 +128,7 @@ export default async function AboutPage() {
             </div>
           ))}
         </dl>
+        </Reveal>
       </section>
     </article>
   );

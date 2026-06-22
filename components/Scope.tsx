@@ -25,7 +25,7 @@ function ScopeCard({
   return (
     <div
       className={`border bg-transparent p-6 md:p-8 ${
-        isIn ? "border-accent/40" : "border-line"
+        isIn ? "border-accent/40" : "border-line/20"
       }`}
     >
       <div className="mb-5 flex items-center gap-2.5">

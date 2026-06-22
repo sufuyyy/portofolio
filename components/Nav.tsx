@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAbout } from "@/lib/content";
+import NavMenu from "./NavMenu";
 
 export default async function Nav() {
   const { frontmatter } = await getAbout();
@@ -8,31 +9,15 @@ export default async function Nav() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-ink">
-      <nav className="container-x flex h-16 items-center justify-between">
+      <nav className="container-x flex h-16 items-center justify-between gap-3">
         <Link
           href="/"
-          className="font-display text-2xl uppercase leading-none text-paper"
+          className="shrink-0 font-display text-xl uppercase leading-none text-paper sm:text-2xl"
         >
           {wordmark}
           <span className="text-accent">.</span>
         </Link>
-        <div className="flex items-center gap-7 font-mono text-xs uppercase tracking-[0.1em]">
-          <Link href="/" className="text-paper transition-opacity hover:opacity-60">
-            Work
-          </Link>
-          <Link
-            href="/about"
-            className="text-paper transition-opacity hover:opacity-60"
-          >
-            About
-          </Link>
-          <a
-            href={frontmatter.email}
-            className="inline-flex items-center bg-accent px-4 py-2 text-ink transition-colors hover:bg-paper"
-          >
-            Contact
-          </a>
-        </div>
+        <NavMenu email={frontmatter.email} />
       </nav>
     </header>
   );

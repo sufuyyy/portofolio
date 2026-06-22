@@ -5,6 +5,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getAdjacentWorks, getWork, getWorkSlugs } from "@/lib/content";
 import { mdxComponents } from "@/components/mdx-components";
+import Reveal from "@/components/Reveal";
 
 type Params = { slug: string };
 
@@ -72,8 +73,35 @@ export default async function WorkPage({ params }: { params: Params }) {
                 </p>
               </div>
             ) : null}
+
+            {frontmatter.links && frontmatter.links.length > 0 ? (
+              <div className="mt-8">
+                <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
+                  Link
+                </p>
+                <div className="mt-2 flex flex-col gap-1.5">
+                  {frontmatter.links.map((link, i) => (
+                    <a
+                      key={i}
+                      href={link.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-fit text-[14px] text-accent underline-offset-4 hover:underline"
+                    >
+                      {link.label} ↗
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         </header>
+
+        {/* Cover hero image — same asset as the Selected Work card */}
+        <Reveal className="mt-12 md:mt-16">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={frontmatter.cover} alt={frontmatter.title} className="w-full" />
+        </Reveal>
 
         {/* MDX body — text stays at a readable measure; figures/groups fill the container */}
         <div className="prose prose-invert mt-12 max-w-none prose-headings:max-w-3xl prose-headings:font-bold prose-headings:tracking-tight prose-p:max-w-3xl prose-ul:max-w-3xl prose-ol:max-w-3xl prose-blockquote:max-w-3xl">
@@ -86,6 +114,7 @@ export default async function WorkPage({ params }: { params: Params }) {
 
         {/* Previous / Next — divider between cells, hover invert */}
         {(prev || next) && (
+          <Reveal>
           <nav className="mt-20 grid grid-cols-1 gap-px bg-line md:mt-24 md:grid-cols-2">
             {prev ? (
               <Link
@@ -118,6 +147,7 @@ export default async function WorkPage({ params }: { params: Params }) {
               <span className="bg-ink" />
             )}
           </nav>
+          </Reveal>
         )}
       </div>
     </article>

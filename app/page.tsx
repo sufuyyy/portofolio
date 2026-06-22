@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getAbout, getAllWorks, getGalleryImages } from "@/lib/content";
 import ImageMarquee from "@/components/ImageMarquee";
+import Reveal from "@/components/Reveal";
+import ShinyText from "@/components/ShinyText";
 
 export default async function HomePage() {
   const [{ frontmatter }, works, gallery] = await Promise.all([
@@ -24,15 +26,22 @@ export default async function HomePage() {
       {/* ── HERO — poster layout, anchored to the bottom of the viewport ── */}
       <section className="flex min-h-[calc(100svh-4rem)] items-end border-b border-line">
         <div className="container-x w-full py-16 md:py-24">
-          <p className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
-            <span aria-hidden className="inline-block h-2 w-2 bg-accent" />
-            Available for freelance &amp; full-time
-          </p>
-
-          <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_18rem] lg:gap-0">
-            <h1 className="font-display text-6xl uppercase leading-[0.92] text-paper sm:text-7xl lg:pr-10 lg:text-[92px]">
-              {frontmatter.name}
-            </h1>
+          <div className="grid gap-10 lg:grid-cols-[1fr_18rem] lg:gap-0">
+            <div className="flex flex-col justify-end lg:pr-10">
+              <p className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.1em]">
+                <span aria-hidden className="inline-block h-2 w-2 bg-accent" />
+                <ShinyText
+                  text="Available for freelance & full-time"
+                  speed={3}
+                  spread={120}
+                  color="#6f6e6a"
+                  shineColor="#f2f1ed"
+                />
+              </p>
+              <h1 className="mt-6 font-display text-6xl uppercase leading-[0.92] text-paper sm:text-7xl lg:text-[92px]">
+                {frontmatter.name}
+              </h1>
+            </div>
 
             <div className="flex flex-col justify-end border-line lg:border-l lg:pl-10">
               <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent">
@@ -82,7 +91,7 @@ export default async function HomePage() {
       </div>
 
       <section className="border-b border-line pt-10 pb-20 md:pt-14 md:pb-28">
-        <div className={`grid grid-cols-1 gap-px bg-line ${colClass}`}>
+        <Reveal className={`grid grid-cols-1 gap-px bg-line ${colClass}`}>
           {works.map((w, i) => (
             <Link
               key={w.slug}
@@ -122,7 +131,7 @@ export default async function HomePage() {
               </div>
             </Link>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* ── GALLERY — inverted strip + marquee (only when images exist) ── */}
@@ -132,7 +141,9 @@ export default async function HomePage() {
             <span>In Motion</span>
           </div>
           <section className="border-b border-line py-10 md:py-14">
-            <ImageMarquee images={gallery} />
+            <Reveal>
+              <ImageMarquee images={gallery} />
+            </Reveal>
           </section>
         </>
       )}

@@ -1,5 +1,5 @@
+import Link from "next/link";
 import { getAbout, getAllWorks, getGalleryImages } from "@/lib/content";
-import WorkIndex, { type WorkItem } from "@/components/WorkIndex";
 import ImageMarquee from "@/components/ImageMarquee";
 
 export default async function HomePage() {
@@ -9,127 +9,132 @@ export default async function HomePage() {
     getGalleryImages(),
   ]);
 
-  const words = frontmatter.name.trim().split(/\s+/);
-  const firstName = words[0];
-  const restName = words.slice(1).join(" ");
-
-  const workItems: WorkItem[] = works.map((w) => ({
-    slug: w.slug,
-    title: w.frontmatter.title,
-    role: w.frontmatter.role,
-    year: String(w.frontmatter.year),
-    cover: w.frontmatter.cover,
-  }));
+  // ≤3 works fit in one horizontal row; more than 3 spills into a 2-up grid.
+  const colClass =
+    works.length > 3
+      ? "md:grid-cols-2"
+      : works.length === 3
+        ? "md:grid-cols-3"
+        : works.length === 2
+          ? "md:grid-cols-2"
+          : "md:grid-cols-1";
 
   return (
     <>
-      {/* Hero — fills the viewport (minus the 4rem sticky nav) */}
-      <section className="relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden">
-        {/* ambient glow */}
-        <div className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-accent/25 blur-[140px]" />
-        <div className="pointer-events-none absolute -top-24 right-[8%] -z-10 h-[22rem] w-[22rem] rounded-full bg-accent2/15 blur-[130px]" />
+      {/* ── HERO — poster layout, anchored to the bottom of the viewport ── */}
+      <section className="flex min-h-[calc(100svh-4rem)] items-end border-b border-line">
+        <div className="container-x w-full py-16 md:py-24">
+          <p className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
+            <span aria-hidden className="inline-block h-2 w-2 bg-accent" />
+            Available for freelance &amp; full-time
+          </p>
 
-        <div className="container-x flex flex-1 flex-col py-10 md:py-14">
-          {/* badge + name + tagline, centered together so the chip sits right above the title */}
-          <div className="flex flex-1 flex-col justify-center gap-8">
-            {/* status badge */}
-            <div className="inline-flex animate-rise items-center gap-2.5 self-start rounded-full border border-line bg-surface/60 px-3.5 py-1.5 text-xs text-soft backdrop-blur">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-pulse-dot rounded-full bg-accent" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-              </span>
-              Available for freelance &amp; full-time
-            </div>
+          <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_18rem] lg:gap-0">
+            <h1 className="font-display text-6xl uppercase leading-[0.92] text-paper sm:text-7xl lg:pr-10 lg:text-[92px]">
+              {frontmatter.name}
+            </h1>
 
-            <div className="flex w-full flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-12">
-              <h1 className="animate-rise font-display text-6xl font-bold leading-[0.9] tracking-tight text-paper [animation-delay:80ms] md:text-8xl">
-                <span className="block">{firstName}</span>
-                {restName ? (
-                  <span className="mt-1 flex items-center gap-4 md:mt-2 md:gap-6">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="/new_logo.svg"
-                      alt=""
-                      aria-hidden="true"
-                      className="h-[0.74em] w-[0.74em] shrink-0"
-                    />
-                    <span>{restName}</span>
-                  </span>
-                ) : null}
-              </h1>
-
-              <div className="max-w-sm animate-rise [animation-delay:160ms] md:pb-4 md:text-right">
-                <p className="text-base leading-relaxed text-soft md:text-lg">
-                  {frontmatter.tagline}
-                </p>
-                <p className="mt-3 text-sm text-muted">
-                  {frontmatter.role} · 3+ years experience
-                </p>
+            <div className="flex flex-col justify-end border-line lg:border-l lg:pl-10">
+              <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent">
+                {frontmatter.role}
+              </p>
+              <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-paper">
+                {frontmatter.tagline}
+              </p>
+              <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
+                3+ years experience
+              </p>
+              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.1em]">
+                <a
+                  href={frontmatter.email}
+                  className="text-muted underline-offset-4 hover:text-paper hover:underline"
+                >
+                  Email
+                </a>
+                <a
+                  href={frontmatter.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-muted underline-offset-4 hover:text-paper hover:underline"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href={frontmatter.dribbble}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-muted underline-offset-4 hover:text-paper hover:underline"
+                >
+                  Dribbble
+                </a>
               </div>
             </div>
           </div>
-
-          {/* hero footer row — pinned to the bottom of the viewport */}
-          <div className="flex animate-rise items-center justify-between border-t border-line/60 pt-6 text-sm text-muted [animation-delay:240ms]">
-            <span className="hidden sm:inline">
-              Scroll to explore{" "}
-              <span className="ml-1 inline-block animate-bounce-y">↓</span>
-            </span>
-            <div className="flex items-center gap-6">
-              <a href={frontmatter.email} className="link-underline transition-colors hover:text-paper">
-                Email
-              </a>
-              <a
-                href={frontmatter.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="link-underline transition-colors hover:text-paper"
-              >
-                LinkedIn
-              </a>
-              <a
-                href={frontmatter.dribbble}
-                target="_blank"
-                rel="noreferrer"
-                className="link-underline transition-colors hover:text-paper"
-              >
-                Dribbble
-              </a>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Selected work — editorial index */}
-      <section className="py-20 md:py-28">
-        <div className="container-x mb-6 flex items-end justify-between">
-          <div>
-            <p className="text-sm uppercase tracking-[0.2em] text-accent">
-              Selected Work
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-paper md:text-4xl">
-              Projects
-            </h2>
-          </div>
-          <span className="text-sm tabular-nums text-muted">
-            ({String(works.length).padStart(2, "0")})
-          </span>
-        </div>
+      {/* ── SELECTED WORK — inverted strip + horizontal card grid ── */}
+      <div className="flex items-center justify-between bg-paper px-6 py-3 font-mono text-[11px] uppercase tracking-[0.1em] text-ink md:px-10">
+        <span>Selected Work</span>
+        <span className="tabular-nums">
+          ({String(works.length).padStart(2, "0")})
+        </span>
+      </div>
 
-        <WorkIndex items={workItems} />
+      <section className="border-b border-line pt-10 pb-20 md:pt-14 md:pb-28">
+        <div className={`grid grid-cols-1 gap-px bg-line ${colClass}`}>
+          {works.map((w, i) => (
+            <Link
+              key={w.slug}
+              href={`/works/${w.slug}`}
+              className="group flex flex-col bg-ink p-6 text-paper transition-colors duration-150 hover:bg-accent hover:text-ink md:p-8"
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs tabular-nums">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span aria-hidden className="text-lg">
+                  ↗
+                </span>
+              </div>
+
+              <div className="relative mt-6 aspect-[16/10] w-full overflow-hidden bg-ink">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={w.frontmatter.cover}
+                  alt={w.frontmatter.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-ink/0 transition-colors duration-150 group-hover:bg-ink/25" />
+              </div>
+
+              <h2 className="mt-6 font-display text-[26px] uppercase md:text-[30px]">
+                {w.frontmatter.title}
+              </h2>
+              {w.frontmatter.subtitle ? (
+                <p className="mt-3 max-w-md text-[14px] opacity-80">
+                  {w.frontmatter.subtitle}
+                </p>
+              ) : null}
+              <div className="mt-6 flex gap-5 font-mono text-[11px] uppercase tracking-[0.1em] opacity-70">
+                <span>{w.frontmatter.role}</span>
+                <span className="tabular-nums">{String(w.frontmatter.year)}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
 
-      {/* Gallery — infinite horizontal scroll (only when images exist) */}
+      {/* ── GALLERY — inverted strip + marquee (only when images exist) ── */}
       {gallery.length > 0 && (
-        <section className="border-t border-line/60 py-20 md:py-28">
-          <div className="container-x mb-10">
-            <p className="text-sm uppercase tracking-[0.2em] text-accent">In Motion</p>
-            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-paper md:text-4xl">
-              Gallery
-            </h2>
+        <>
+          <div className="flex items-center bg-paper px-6 py-3 font-mono text-[11px] uppercase tracking-[0.1em] text-ink md:px-10">
+            <span>In Motion</span>
           </div>
-          <ImageMarquee images={gallery} />
-        </section>
+          <section className="border-b border-line py-10 md:py-14">
+            <ImageMarquee images={gallery} />
+          </section>
+        </>
       )}
     </>
   );

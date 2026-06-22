@@ -6,21 +6,18 @@ export default async function Footer() {
   const email = frontmatter.email.replace("mailto:", "");
 
   return (
-    <footer className="relative overflow-hidden border-t border-line/60">
-      {/* ambient glow */}
-      <div className="pointer-events-none absolute -bottom-40 left-1/2 -z-10 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-accent/15 blur-[150px]" />
-
+    <footer className="border-t border-line">
       {/* Big CTA */}
       <div className="container-x py-20 md:py-28">
-        <p className="text-sm uppercase tracking-[0.2em] text-accent">
+        <p className="font-mono text-xs uppercase tracking-[0.1em] text-accent">
           Have a project in mind?
         </p>
         <a
           href={frontmatter.email}
-          className="group mt-5 block font-display text-4xl font-bold tracking-tight text-paper md:text-7xl"
+          className="group mt-5 block font-display text-4xl uppercase leading-[0.95] tracking-tight text-paper md:text-7xl"
         >
-          <span className="link-underline">Let’s work together</span>
-          <span className="ml-2 inline-block transition-transform duration-300 group-hover:translate-x-2 group-hover:text-accent">
+          <span className="link-underline">Let&apos;s work together</span>
+          <span className="ml-2 inline-block transition-transform duration-300 group-hover:translate-x-2">
             ↗
           </span>
         </a>
@@ -33,8 +30,8 @@ export default async function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-line/60">
-        <div className="container-x flex flex-col gap-4 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t border-line">
+        <div className="container-x flex flex-col gap-4 py-6 font-mono text-xs uppercase tracking-[0.1em] text-muted sm:flex-row sm:items-center sm:justify-between">
           <span>
             © {year} {frontmatter.name}
           </span>
@@ -55,10 +52,7 @@ export default async function Footer() {
             >
               Dribbble
             </a>
-            <a
-              href={frontmatter.email}
-              className="transition-colors hover:text-paper"
-            >
+            <a href={frontmatter.email} className="transition-colors hover:text-paper">
               Email
             </a>
           </div>

@@ -49,6 +49,16 @@ body {
   background-size: 100% 1px;
 }
 
+/* Case-study body (MDX): display headings in the poster face, h2 uppercase.
+   Colours come from the `prose-invert` token mapping in tailwind.config.ts. */
+.prose :is(h1, h2, h3, h4) {
+  font-family: var(--font-display), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+.prose h2 {
+  text-transform: uppercase;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .animate-marquee-reverse,

@@ -17,7 +17,7 @@ export default function ProjectImage({ src, alt = "", caption }: ProjectImagePro
       <img
         src={src}
         alt={alt}
-        className="w-full rounded-xl"
+        className="w-full"
       />
       {caption ? (
         <figcaption className="mt-3 text-sm text-muted">{caption}</figcaption>

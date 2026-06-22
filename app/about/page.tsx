@@ -7,77 +7,94 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   const { frontmatter } = await getAbout();
+  const exp = frontmatter.experience;
+  const expCols =
+    exp.length > 3
+      ? "md:grid-cols-2"
+      : exp.length === 3
+        ? "md:grid-cols-3"
+        : exp.length === 2
+          ? "md:grid-cols-2"
+          : "md:grid-cols-1";
 
   return (
-    <article className="relative overflow-hidden">
-      {/* ambient glow */}
-      <div className="pointer-events-none absolute -top-32 right-0 -z-10 h-[28rem] w-[28rem] rounded-full bg-accent/15 blur-[140px]" />
+    <article>
+      {/* ── HERO — poster layout, anchored to the bottom of the viewport ── */}
+      <section className="flex min-h-[calc(100svh-4rem)] items-end border-b border-line">
+        <div className="container-x w-full py-16 md:py-24">
+          <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent">
+            About — {frontmatter.role}
+          </p>
 
-      <header className="container-x max-w-3xl pt-20 md:pt-28">
-        <p className="text-sm uppercase tracking-[0.2em] text-accent">
-          About — {frontmatter.role}
-        </p>
-        <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] tracking-tight text-paper md:text-6xl">
-          {frontmatter.name}
-        </h1>
-        <p className="mt-8 text-lg leading-relaxed text-soft md:text-xl">
-          {frontmatter.bio}
-        </p>
+          <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_24rem] lg:gap-0">
+            <h1 className="font-display text-6xl uppercase leading-[0.92] text-paper sm:text-7xl lg:pr-10 lg:text-[92px]">
+              {frontmatter.name}
+            </h1>
 
-        <div className="mt-8 flex flex-wrap gap-3 text-sm">
-          <a
-            href={frontmatter.email}
-            className="rounded-full border border-line bg-surface/60 px-4 py-1.5 text-soft transition-colors hover:border-accent hover:text-paper"
-          >
-            Email
-          </a>
-          <a
-            href={frontmatter.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full border border-line bg-surface/60 px-4 py-1.5 text-soft transition-colors hover:border-accent hover:text-paper"
-          >
-            LinkedIn
-          </a>
-          <a
-            href={frontmatter.dribbble}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full border border-line bg-surface/60 px-4 py-1.5 text-soft transition-colors hover:border-accent hover:text-paper"
-          >
-            Dribbble
-          </a>
+            <div className="flex flex-col justify-end border-line lg:border-l lg:pl-10">
+              <p className="text-[15px] leading-relaxed text-soft">
+                {frontmatter.bio}
+              </p>
+              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.1em]">
+                <a
+                  href={frontmatter.email}
+                  className="text-muted underline-offset-4 hover:text-paper hover:underline"
+                >
+                  Email
+                </a>
+                <a
+                  href={frontmatter.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-muted underline-offset-4 hover:text-paper hover:underline"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href={frontmatter.dribbble}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-muted underline-offset-4 hover:text-paper hover:underline"
+                >
+                  Dribbble
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-      </header>
+      </section>
 
-      {/* Experience */}
+      {/* ── EXPERIENCE — card grid (same treatment as Selected Work) ── */}
       <section className="container-x pb-24 pt-20 md:pb-28">
-        <div className="mb-2 flex items-end justify-between border-b border-line/60 pb-4">
-          <h2 className="text-sm uppercase tracking-[0.2em] text-accent">
+        <div className="mb-8 flex items-end justify-between border-b border-line pb-4">
+          <h2 className="font-mono text-xs uppercase tracking-[0.1em] text-accent">
             Experience
           </h2>
-          <span className="text-sm tabular-nums text-muted">
-            ({String(frontmatter.experience.length).padStart(2, "0")})
+          <span className="font-mono text-xs tabular-nums text-muted">
+            ({String(exp.length).padStart(2, "0")})
           </span>
         </div>
-        <dl>
-          {frontmatter.experience.map((job, i) => (
+
+        <dl className={`grid grid-cols-1 gap-px bg-line ${expCols}`}>
+          {exp.map((job, i) => (
             <div
               key={`${job.company}-${job.years}`}
-              className="group grid grid-cols-1 items-baseline gap-1 border-b border-line/60 py-6 transition-colors hover:bg-surface/30 md:grid-cols-12 md:gap-4"
+              className="flex flex-col bg-ink p-6 md:p-8"
             >
-              <dt className="flex items-baseline gap-4 md:col-span-6">
-                <span className="font-display text-sm tabular-nums text-muted transition-colors group-hover:text-accent">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="font-display text-xl font-bold tracking-tight text-paper md:text-2xl">
-                  {job.company}
-                </span>
+              <span className="font-mono text-xs tabular-nums text-muted">
+                [{String(i + 1).padStart(2, "0")}]
+              </span>
+              <dt className="mt-6 font-display text-xl uppercase leading-tight tracking-tight text-paper md:text-2xl">
+                {job.company}
               </dt>
-              <dd className="text-soft md:col-span-3">{job.position}</dd>
-              <dd className="text-sm tabular-nums text-muted md:col-span-3 md:text-right">
-                {job.years}
+              <dd className="mt-3 font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
+                {job.position} · {job.years}
               </dd>
+              {job.description ? (
+                <dd className="mt-4 text-sm leading-relaxed text-soft">
+                  {job.description}
+                </dd>
+              ) : null}
             </div>
           ))}
         </dl>

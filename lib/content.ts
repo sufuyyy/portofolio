@@ -12,6 +12,7 @@ export type Experience = {
   company: string;
   years: string;
   position: string;
+  description?: string;
 };
 
 export type AboutFrontmatter = {
@@ -31,6 +32,7 @@ export type WorkFrontmatter = {
   role: string;
   year: string | number;
   scope?: string;
+  subtitle?: string;
   summary: string;
   cover: string;
   order?: number;

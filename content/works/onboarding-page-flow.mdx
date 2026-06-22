@@ -3,6 +3,7 @@ title: "Onboarding Page Flow"
 role: "UI Designer"
 year: "2025"
 scope: "User Interface Designer"
+subtitle: "A step-by-step setup experience designed to reduce first-time user friction"
 order: 2
 summary: "A guided onboarding flow designed to help new users complete account setup faster, understand key steps clearly, and reach their first meaningful action with less friction."
 cover: "/images/projects/onboarding-page-flow/cover_onboarding.svg"
@@ -39,30 +40,60 @@ To design a clean and intuitive onboarding flow that welcomes new users, motivat
 ## Process & Solution
 
 ### Step 1 / Requirement Review
-I started by reviewing the PRD provided by the product team to understand the onboarding goals, target users, and required information. From there, I mapped the user flow to define how users would move through each setup step.
-
-### Step 2  / Wireframe & Structure
-After understanding the requirements, I created wireframes for a step-by-step onboarding experience. The structure was designed to reduce cognitive load by breaking the setup process into smaller, focused questions.
+The first step was reviewing the PRD from the product team to understand the onboarding goals, target users, and the information the flow needed to collect. From there the user flow was mapped to make clear how users would move through each step before any screen was designed, so structural problems could be caught early rather than after the UI was built.
 
 <ProjectImage
-  src="/images/projects/onboarding-page-flow/cs_img1.svg"
+  src="/images/projects/onboarding-page-flow/cs_img_useflow.png"
 />
 
-### Step 3  / UI Design & Guided Interaction
-I designed the onboarding interface using a clean single-question layout, a top progress indicator, and selectable role options to make the setup process feel guided and easy to complete. Each step focused on one decision at a time, helping users stay focused without feeling overwhelmed.
-The progress bar at the top gave users a clear sense of where they were in the onboarding flow, while the disabled “Continue” button encouraged them to complete the required selection before moving forward. I also included a “Skip Onboarding & Go to Advanced Setup” option to give more flexibility for users who preferred to bypass the guided flow.
+### Step 2  / Wireframe & Structure
+With the requirements clear, wireframes laid out a step-by-step experience. The setup was broken into small, focused questions rather than one long form, because asking one thing at a time keeps cognitive load low and makes users far less likely to abandon the process partway through.
 
 <ProjectImage
-  src="/images/projects/onboarding-page-flow/cs_img2.svg"
+  src="/images/projects/onboarding-page-flow/cs_img_lofi-1.png"
 />
 
 <ProjectImageGroup>
-  <ProjectImage src="/images/projects/onboarding-page-flow/cs_img3.svg"/>
-  <ProjectImage src="/images/projects/onboarding-page-flow/cs_img4.svg"/>
+  <ProjectImage src="/images/projects/onboarding-page-flow/cs_img_lofi-2.png"/>
+  <ProjectImage src="/images/projects/onboarding-page-flow/cs_img_lofi-3.png"/>
 </ProjectImageGroup>
 
-## Summary
+### Step 3  / UI Design & Guided Interaction
+The interface used a single-question layout with a top progress indicator and selectable role options. One decision per screen kept users focused, the progress bar reassured them how much was left so the flow felt finite, and the disabled "Continue" button gently enforced the required selection without a jarring error. A "Skip to Advanced Setup" option was added so advanced users were not forced through a guided flow built for first-timers.
 
-After restructuring and re-documenting the components, the design system became easier to maintain, reference, and reuse. Designers could work with clearer component standards, while product owners had a more accessible reference when reviewing UI decisions.
+<ProjectImage
+  src="/images/projects/onboarding-page-flow/cs_img_hifi-1.png"
+/>
 
-Although the process is still ongoing, this improvement helped build a stronger foundation for UI consistency, design collaboration, and future product scalability
+<ProjectImage
+  src="/images/projects/onboarding-page-flow/cs_img_hifi-2.png"
+/>
+
+<ProjectImage
+  src="/images/projects/onboarding-page-flow/cs_img_hifi-3.png"
+/>
+
+<ProjectImageGroup>
+  <ProjectImage src="/images/projects/onboarding-page-flow/cs_img_detail-1.png"/>
+  <ProjectImage src="/images/projects/onboarding-page-flow/cs_img_detail-2.png"/>
+</ProjectImageGroup>
+
+<ProjectImage
+  src="/images/projects/onboarding-page-flow/cs_img_detail-3.png"
+/>
+
+## Design highlights
+
+The key design decisions that shaped a guided, low-friction setup.
+
+<Metrics items="
+1 | Decision per screen | A single-question layout keeps cognitive load low and focus high;
+3 | Personalization inputs | Setup adapts to the user's role, industry, and main problem;
+2 | Setup Paths | A guided flow, plus a skip-to-advanced option for power users;
+E2E | Designed end to end | Flow, wireframes, and final UI handed off to engineering
+" />
+
+
+## Reflection
+
+The flow was designed end to end and handed off to engineering for implementation. The next step is to validate it with real users once it ships, measuring how many complete setup without help and where they drop off, so the guided experience can be refined with evidence rather than assumption.

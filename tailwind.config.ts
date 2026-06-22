@@ -9,18 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#08080a",
-        surface: "#121214",
-        line: "#26262b",
-        muted: "#85858f",
-        soft: "#c4c4cd",
-        paper: "#f7f7f5",
-        accent: "#3574B2",
+        ink: "#0b0b0c", // page background, near-black
+        surface: "#141416", // subtle hover/raised fill
+        line: "#f2f1ed", // borders/dividers — bright, same as primary text
+        muted: "#6f6e6a", // secondary text, meta labels, captions
+        soft: "#cfcec9", // body / secondary copy
+        paper: "#f2f1ed", // primary text/foreground, off-white
+        accent: "#3674b2", // the only accent — blue
         accent2: "#22d3ee",
+        online: "#34d399",
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       maxWidth: {
         content: "76rem",
@@ -54,6 +56,10 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(4px)" },
         },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.25" },
+        },
       },
       animation: {
         marquee: "marquee 30s linear infinite",
@@ -63,6 +69,7 @@ const config: Config = {
         "page-in": "pageIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards",
         "pulse-dot": "pulseDot 2s ease-in-out infinite",
         "bounce-y": "bounceY 1.6s ease-in-out infinite",
+        blink: "blink 2.4s ease-in-out infinite",
       },
       typography: ({ theme }: { theme: (path: string) => string }) => ({
         invert: {

@@ -34,7 +34,7 @@ export default function ImageMarquee({ images }: { images: string[] }) {
             src={src}
             alt=""
             aria-hidden="true"
-            className="h-64 w-auto rounded-xl border border-line bg-surface transition-transform duration-500 hover:scale-[1.02] md:h-[26rem]"
+            className="h-64 w-auto bg-surface transition-transform duration-500 hover:scale-[1.02] md:h-[26rem]"
           />
         </li>
       ))}

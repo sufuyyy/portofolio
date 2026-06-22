@@ -34,93 +34,91 @@ export default async function WorkPage({ params }: { params: Params }) {
   const { prev, next } = await getAdjacentWorks(params.slug);
 
   return (
-    <article className="relative overflow-hidden">
-      {/* ambient glow */}
-      <div className="pointer-events-none absolute -top-32 left-1/4 -z-10 h-[26rem] w-[26rem] rounded-full bg-accent/15 blur-[140px]" />
-
+    <article>
       <div className="container-x py-16 md:py-24">
-      <Link
-        href="/"
-        className="group inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent"
-      >
-        <span className="transition-transform duration-300 group-hover:-translate-x-1">
-          ←
-        </span>
-        All work
-      </Link>
+        <Link
+          href="/"
+          className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.1em] text-muted transition-colors hover:text-paper"
+        >
+          <span className="transition-transform duration-300 group-hover:-translate-x-1">
+            ←
+          </span>
+          All work
+        </Link>
 
-      <header className="mt-8 max-w-3xl">
-        <p className="mb-4 text-sm uppercase tracking-[0.2em] text-accent">
-          Case Study
-        </p>
-        <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-paper md:text-6xl">
-          {frontmatter.title}
-        </h1>
-        <p className="mt-6 text-lg leading-relaxed text-soft">
-          {frontmatter.summary}
-        </p>
-        <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-6 border-t border-line/60 pt-6 text-sm md:gap-x-16">
-          <div className="min-w-[100px]">
-            <dt className="text-xs uppercase tracking-[0.15em] text-muted">Role</dt>
-            <dd className="mt-1.5 text-paper">{frontmatter.role}</dd>
+        {/* Poster-style hero: title bottom-left, summary/scope in a right
+            column split off by a vertical divider. */}
+        <header className="mt-8 grid gap-10 border-b border-line pb-12 md:mt-10 md:min-h-[60svh] md:pb-16 lg:grid-cols-[1fr_20rem] lg:gap-0">
+          <div className="flex flex-col justify-end lg:pr-12">
+            <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent">
+              {frontmatter.role} · {String(frontmatter.year)}
+            </p>
+            <h1 className="mt-4 font-display text-[44px] uppercase leading-[0.92] text-paper md:text-[84px]">
+              {frontmatter.title}
+            </h1>
           </div>
-          <div className="min-w-[100px]">
-            <dt className="text-xs uppercase tracking-[0.15em] text-muted">Year</dt>
-            <dd className="mt-1.5 text-paper">{frontmatter.year}</dd>
+
+          <div className="flex flex-col justify-end border-line lg:border-l lg:pl-12">
+            <p className="max-w-sm text-[15px] leading-relaxed text-paper opacity-80">
+              {frontmatter.summary}
+            </p>
+            {frontmatter.scope ? (
+              <div className="mt-8">
+                <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
+                  Scope
+                </p>
+                <p className="mt-2 max-w-xs text-[14px] text-paper">
+                  {frontmatter.scope}
+                </p>
+              </div>
+            ) : null}
           </div>
-          {frontmatter.scope ? (
-            <div className="max-w-[350px]">
-              <dt className="text-xs uppercase tracking-[0.15em] text-muted">Scope</dt>
-              <dd className="mt-1.5 text-paper">{frontmatter.scope}</dd>
-            </div>
-          ) : null}
-        </dl>
-      </header>
+        </header>
 
-      {/* MDX body — text stays at a readable measure; figures/groups fill the container */}
-      <div className="prose prose-invert mt-12 max-w-none prose-headings:max-w-3xl prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-p:max-w-3xl prose-ul:max-w-3xl prose-ol:max-w-3xl prose-blockquote:max-w-3xl prose-img:rounded-xl">
-        <MDXRemote
-          source={content}
-          components={mdxComponents}
-          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
-        />
-      </div>
+        {/* MDX body — text stays at a readable measure; figures/groups fill the container */}
+        <div className="prose prose-invert mt-12 max-w-none prose-headings:max-w-3xl prose-headings:font-bold prose-headings:tracking-tight prose-p:max-w-3xl prose-ul:max-w-3xl prose-ol:max-w-3xl prose-blockquote:max-w-3xl">
+          <MDXRemote
+            source={content}
+            components={mdxComponents}
+            options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+          />
+        </div>
 
-      {/* Previous / Next project navigation */}
-      {(prev || next) && (
-        <nav className="mt-20 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-line bg-line md:mt-24 md:grid-cols-2">
-          {prev ? (
-            <Link
-              href={`/works/${prev.slug}`}
-              className="group flex flex-col gap-2 bg-ink p-6 transition-colors hover:bg-surface/60 md:p-8"
-            >
-              <span className="text-sm text-muted transition-colors group-hover:text-accent">
-                ← Previous
-              </span>
-              <span className="font-display text-xl font-bold tracking-tight text-soft transition-colors group-hover:text-paper md:text-2xl">
-                {prev.frontmatter.title}
-              </span>
-            </Link>
-          ) : (
-            <span className="bg-ink" />
-          )}
-          {next ? (
-            <Link
-              href={`/works/${next.slug}`}
-              className="group flex flex-col items-end gap-2 bg-ink p-6 text-right transition-colors hover:bg-surface/60 md:p-8"
-            >
-              <span className="text-sm text-muted transition-colors group-hover:text-accent">
-                Next →
-              </span>
-              <span className="font-display text-xl font-bold tracking-tight text-soft transition-colors group-hover:text-paper md:text-2xl">
-                {next.frontmatter.title}
-              </span>
-            </Link>
-          ) : (
-            <span className="bg-ink" />
-          )}
-        </nav>
-      )}
+        {/* Previous / Next — divider between cells, hover invert */}
+        {(prev || next) && (
+          <nav className="mt-20 grid grid-cols-1 gap-px bg-line md:mt-24 md:grid-cols-2">
+            {prev ? (
+              <Link
+                href={`/works/${prev.slug}`}
+                className="flex flex-col gap-2 bg-ink p-6 text-paper transition-colors duration-150 hover:bg-accent hover:text-ink md:p-8"
+              >
+                <span className="font-mono text-[11px] uppercase tracking-[0.1em]">
+                  ← Previous
+                </span>
+                <span className="font-display text-[22px] uppercase md:text-[26px]">
+                  {prev.frontmatter.title}
+                </span>
+              </Link>
+            ) : (
+              <span className="bg-ink" />
+            )}
+            {next ? (
+              <Link
+                href={`/works/${next.slug}`}
+                className="flex flex-col items-end gap-2 bg-ink p-6 text-right text-paper transition-colors duration-150 hover:bg-accent hover:text-ink md:p-8"
+              >
+                <span className="font-mono text-[11px] uppercase tracking-[0.1em]">
+                  Next →
+                </span>
+                <span className="font-display text-[22px] uppercase md:text-[26px]">
+                  {next.frontmatter.title}
+                </span>
+              </Link>
+            ) : (
+              <span className="bg-ink" />
+            )}
+          </nav>
+        )}
       </div>
     </article>
   );

@@ -24,15 +24,15 @@ function ScopeCard({
   const isIn = variant === "in";
   return (
     <div
-      className={`rounded-xl border bg-surface/40 p-6 md:p-8 ${
+      className={`border bg-transparent p-6 md:p-8 ${
         isIn ? "border-accent/40" : "border-line"
       }`}
     >
       <div className="mb-5 flex items-center gap-2.5">
         <span
           aria-hidden="true"
-          className={`flex h-6 w-6 items-center justify-center rounded-full text-sm ${
-            isIn ? "bg-accent/15 text-accent" : "bg-line/60 text-muted"
+          className={`flex h-6 w-6 items-center justify-center text-sm ${
+            isIn ? "bg-accent/15 text-accent" : "bg-line/20 text-muted"
           }`}
         >
           {isIn ? "✓" : "✕"}

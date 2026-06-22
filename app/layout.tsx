@@ -1,14 +1,22 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
+import { Archivo_Black, Space_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { getAbout } from "@/lib/content";
 
-const spaceGrotesk = Space_Grotesk({
+const archivoBlack = Archivo_Black({
   subsets: ["latin"],
+  weight: "400",
   display: "swap",
   variable: "--font-display",
+});
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-mono",
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -36,7 +44,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${spaceGrotesk.variable}`}>
+    <html
+      lang="en"
+      className={`${plusJakarta.variable} ${archivoBlack.variable} ${spaceMono.variable}`}
+    >
       <body className="flex min-h-screen flex-col font-sans">
         {/* Film-grain texture overlay */}
         <div

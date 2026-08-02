@@ -51,7 +51,7 @@ export default async function HomePage() {
                 {frontmatter.tagline}
               </p>
               <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
-                3+ years experience
+                4+ years experience
               </p>
               <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.1em]">
                 <a

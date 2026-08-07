@@ -72,6 +72,14 @@ export default async function AboutPage() {
                 >
                   Dribbble
                 </a>
+                <a
+                  href={frontmatter.resume}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-muted underline-offset-4 hover:text-paper hover:underline"
+                >
+                  Resume
+                </a>
               </div>
             </div>
           </div>

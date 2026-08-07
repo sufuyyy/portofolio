@@ -24,6 +24,7 @@ export type AboutFrontmatter = {
   email: string;
   linkedin: string;
   dribbble: string;
+  resume: string;
   experience: Experience[];
   /** Optional small image that floats (absolute) over the About hero. */
   heroAccent?: string;

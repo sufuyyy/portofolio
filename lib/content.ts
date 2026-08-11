@@ -28,6 +28,8 @@ export type AboutFrontmatter = {
   experience: Experience[];
   /** Optional small image that floats (absolute) over the About hero. */
   heroAccent?: string;
+  /** Optional image shown beside the About content body. */
+  contentImage?: string;
 };
 
 export type WorkLink = {

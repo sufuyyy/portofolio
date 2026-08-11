@@ -89,13 +89,24 @@ export default async function AboutPage() {
       {/* ── CONTENT — free text from the About MDX body (optional) ── */}
       {content.trim() ? (
         <section className="border-b border-line">
-          <Reveal className="container-x max-w-3xl py-20 md:py-28">
-            <div className="prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight">
-              <MDXRemote
-                source={content}
-                components={mdxComponents}
-                options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
-              />
+          <Reveal className="container-x py-20 md:py-28">
+            <div className="grid gap-10 lg:grid-cols-[1fr_22rem] lg:gap-16">
+              <div className="prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight">
+                <MDXRemote
+                  source={content}
+                  components={mdxComponents}
+                  options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+                />
+              </div>
+
+              {frontmatter.contentImage ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={frontmatter.contentImage}
+                  alt=""
+                  className="h-full w-full rounded-sm border border-line object-cover"
+                />
+              ) : null}
             </div>
           </Reveal>
         </section>
